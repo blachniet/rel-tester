@@ -16,4 +16,4 @@ New-Object PSObject -Property @{
   tag_name = $info.version
 } |
   ConvertTo-Json |
-  Invoke-RestMethod -Method POST https://api.github.com/repos/blachniet/rel-tester/releases
+  Invoke-RestMethod -Method POST "https://api.github.com/repos/blachniet/rel-tester/releases?access_token=$($env:RelTesterToken)"
