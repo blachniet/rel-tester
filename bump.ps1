@@ -1,3 +1,8 @@
+param(
+  [Parameter(Mandatory=$True,Position=0)]
+  [string]$token
+)
+
 $title = (Invoke-RestMethod https://randomuser.me/api/ -ContentType 'application/json').results.user.username
 $info = (Get-Content "info.json") | ConvertFrom-Json
 $info.title = $title
@@ -16,4 +21,4 @@ New-Object PSObject -Property @{
   tag_name = $info.version.ToString()
 } |
   ConvertTo-Json |
-  Invoke-RestMethod -Method POST "https://api.github.com/repos/blachniet/rel-tester/releases?access_token=$($env:RelTesterToken)"
+  Invoke-RestMethod -Method POST "https://api.github.com/repos/blachniet/rel-tester/releases?access_token=$token"
