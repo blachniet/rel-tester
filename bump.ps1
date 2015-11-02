@@ -1,7 +1,7 @@
 $title = (Invoke-RestMethod https://randomuser.me/api/ -ContentType 'application/json').results.user.username
 $info = (Get-Content "info.json") | ConvertFrom-Json
 $info.title = $title
-$info.version += 0.1
+$info.version += 1
 $info.date = (Get-Date)
 $info | ConvertTo-Json | Out-File "info.json" -Encoding utf8
 
@@ -12,8 +12,8 @@ $info | ConvertTo-Json | Out-File "info.json" -Encoding utf8
 & git push --tags
 
 New-Object PSObject -Property @{
-  name = $info.title
-  tag_name = $info.version
+  name = $info.title.ToString()
+  tag_name = $info.version.ToString()
 } |
   ConvertTo-Json |
   Invoke-RestMethod -Method POST "https://api.github.com/repos/blachniet/rel-tester/releases?access_token=$($env:RelTesterToken)"
